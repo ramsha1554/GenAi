@@ -2,7 +2,12 @@ import express from 'express';
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.routes.js";
+import dotenv from "dotenv";
+import connectDB from "./config/database.js";
 
+
+dotenv.config();
+connectDB();
 
 const app = express();
 app.use("/api/auth", authRouter);
