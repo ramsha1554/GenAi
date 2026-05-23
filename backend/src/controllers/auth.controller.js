@@ -1,7 +1,12 @@
-export const registerUserController = (req, res) => {
+import userModel from "../models/user.model.js";
+
+
+
+export const registerUserController = async (req, res) => {
 
   const { username, email, password } = req.body;
 
+  // check empty fields
   if (!username || !email || !password) {
     return res.status(400).json({
       success: false,
@@ -9,6 +14,7 @@ export const registerUserController = (req, res) => {
     });
   }
 
+  // check password length
   if (password.length < 6) {
     return res.status(400).json({
       success: false,
@@ -16,13 +22,18 @@ export const registerUserController = (req, res) => {
     });
   }
 
+  // create user in database
+  const user = await userModel.create({
+    username,
+    email,
+    password
+  });
+
+  // success response
   res.status(201).json({
     success: true,
-    message: "Validation successful",
-    user: {
-      username,
-      email
-    }
+    message: "User registered successfully",
+    user
   });
 
 };
