@@ -1,11 +1,20 @@
+import AuthLayout from "../layouts/AuthLayout";
+
 function Login() {
 
   return (
-    <div>
+
+    <AuthLayout>
+
       <h1>Login Page</h1>
-    </div>
+
+    </AuthLayout>
+
   );
 
 }
 
 export default Login;
+
+
+// "wrap Login page inside common auth structure"
