@@ -1,5 +1,6 @@
 import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const registerUserController = async (req, res) => {
 
@@ -41,14 +42,27 @@ export const registerUserController = async (req, res) => {
     password: hashedPassword
   });
 
+  // create jwt token
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  // store token in cookie
+  res.cookie("token", token);
+
   // success response
   res.status(201).json({
     success: true,
     message: "User registered successfully",
-    user
+    token
   });
 
 };
+
+
+
 
 
 export const loginUserController = (req, res) => {
@@ -83,3 +97,28 @@ export const logoutUserController = (req, res) => {
   });
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 1. bcrypt hashing
+// 2. JWT token
+// 3. cookie setup
+// 4. login verification
+// 5. logout
+// 6. blacklist
+// 7. auth middleware
+// 8. getMe
