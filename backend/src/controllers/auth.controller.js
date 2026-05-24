@@ -65,7 +65,7 @@ export const registerUserController = async (req, res) => {
 
 
 
-export const loginUserController = (req, res) => {
+export const loginUserController = async (req, res) => {
 
   const { email, password } = req.body;
 
@@ -77,10 +77,46 @@ export const loginUserController = (req, res) => {
     });
   }
 
+  // find user
+  const user = await userModel.findOne({ email });
+
+  // check user exists
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  // compare password
+  const isPasswordMatch = await bcrypt.compare(
+    password,
+    user.password
+  );
+
+  // invalid password
+  if (!isPasswordMatch) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid password"
+    });
+  }
+
+  // create token
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  // store cookie
+  res.cookie("token", token);
+
   // success response
   res.status(200).json({
     success: true,
-    message: "Login successful"
+    message: "Login successful",
+    token
   });
 
 };
