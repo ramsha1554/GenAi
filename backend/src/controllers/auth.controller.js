@@ -1,6 +1,10 @@
 import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import tokenBlacklistModel from "../models/blacklist.model.js";
+
+
+
 
 export const registerUserController = async (req, res) => {
 
@@ -125,9 +129,19 @@ export const loginUserController = async (req, res) => {
 
 
 
-export const logoutUserController = (req, res) => {
+export const logoutUserController = async (req, res) => {
 
-  // clear token cookie
+  // get token from cookie
+  const token = req.cookies.token;
+
+  // add token to blacklist
+  if (token) {
+    await tokenBlacklistModel.create({
+      token
+    });
+  }
+
+  // clear cookie
   res.clearCookie("token");
 
   // success response
