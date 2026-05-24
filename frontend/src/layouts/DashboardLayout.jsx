@@ -1,15 +1,17 @@
-function DashboardLayout({ children }) {
+import DashboardLayout from "../layouts/DashboardLayout";
+
+function Dashboard() {
 
   return (
 
-    <div>
+    <DashboardLayout>
 
-      {children}
+      <h1>Dashboard Page</h1>
 
-    </div>
+    </DashboardLayout>
 
   );
 
 }
 
-export default DashboardLayout;
+export default Dashboard;
