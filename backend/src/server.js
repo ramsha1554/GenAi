@@ -1,25 +1,31 @@
 import express from 'express';
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/auth.routes.js";
 import dotenv from "dotenv";
+
+import authRouter from "./routes/auth.routes.js";
 import connectDB from "./config/database.js";
 
-
 dotenv.config();
+
 connectDB();
 
 const app = express();
-app.use("/api/auth", authRouter);
 
-app.use (express.json());
-app.use (cookieParser());
 
+// middleware FIRST
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
 }));
 
+app.use(express.json());
+
+app.use(cookieParser());
+
+
+// routes AFTER middleware
+app.use("/api/auth", authRouter);
 
 
 app.get('/', (req, res) => {
