@@ -37,5 +37,12 @@ authRouter.post("/login", loginUserController);
 authRouter.get("/logout", logoutUserController);
 
 
+authRouter.get(
+  "/get-me",
+  authUser,
+  getMeController
+);   
+
+
 
 export default authRouter;
