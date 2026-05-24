@@ -1,9 +1,15 @@
+import AuthLayout from "../layouts/AuthLayout";
+
 function Register() {
 
   return (
-    <div>
-      <h1>Register   Page</h1>
-    </div>
+
+    <AuthLayout>
+
+      <h1>Register Page</h1>
+
+    </AuthLayout>
+
   );
 
 }
