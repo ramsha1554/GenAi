@@ -34,7 +34,7 @@ function Login() {
         }
       );
 
-      // save logged in user globally
+      // save user globally
       setUser(response.data.user);
 
       // redirect dashboard
