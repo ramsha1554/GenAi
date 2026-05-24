@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import authRouter from "./routes/auth.routes.js";
+import interviewRouter from "./routes/interview.routes.js";
 import connectDB from "./config/database.js";
 
 dotenv.config();
@@ -26,6 +27,9 @@ app.use(cookieParser());
 
 // routes AFTER middleware
 app.use("/api/auth", authRouter);
+
+
+app.use("/api/interview", interviewRouter);
 
 
 app.get('/', (req, res) => {
