@@ -127,6 +127,10 @@ export const loginUserController = async (req, res) => {
 
 export const logoutUserController = (req, res) => {
 
+  // clear token cookie
+  res.clearCookie("token");
+
+  // success response
   res.status(200).json({
     success: true,
     message: "Logout successful"
